@@ -1,0 +1,55 @@
+# Environment & Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+
+# Databases & Local Storage
+*.db
+*.sqlite
+*.sqlite3
+codeforge.db
+postgres_data/
+qdrant_data/
+
+# Python / Backend
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+backend/venv/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Node.js / Next.js / Frontend
+node_modules/
+frontend/node_modules/
+.next/
+frontend/.next/
+out/
+frontend/out/
+build/
+dist/
+.vercel
+
+# IDE & Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
