@@ -7,8 +7,8 @@ export const useSyncWebsocket = (projectId: string, databaseId: string | null) =
   useEffect(() => {
     if (!databaseId) return;
 
-    // Use a fixed project_id for hackathon demo or dynamic if provided
-    const wsUrl = `ws://localhost:8000/api/v1/ws/projects/${projectId}/runs/sync_${databaseId}`;
+    const wsBaseUrl = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8000/api/v1';
+    const wsUrl = `${wsBaseUrl}/ws/projects/${projectId}/runs/sync_${databaseId}`;
     
     const ws = new WebSocket(wsUrl);
 
