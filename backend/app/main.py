@@ -25,6 +25,15 @@ app.add_middleware(
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
+@app.get("/")
+def root():
+    return {
+        "message": "Welcome to ContextForge AI API Gateway",
+        "health": "/health",
+        "docs": "/docs",
+        "version": "1.0.0"
+    }
+
 @app.get("/health")
 def health_check():
     return {"status": "ok", "project": settings.PROJECT_NAME}
