@@ -675,10 +675,17 @@ uvicorn app.main:app --reload --port 8000
         setActiveTab(`app/api/${targetEntity}_router.py`);
       }
       
+      setMockAgentSteps([
+        { name: "Planner Agent", status: "completed", detail: "Decomposed prompt into 5 Clean Architecture modules.", time: "0.2s" },
+        { name: "Context Agent (Mocked)", status: "completed", detail: "Loaded verified DB schema & foreign keys from DataHub.", time: "0.5s" },
+        { name: "Impact Analysis Agent", status: lowerPrompt.includes("rename") ? "warning" : "completed", detail: lowerPrompt.includes("rename") ? "Risk Score: HIGH (Downstream BI Dashboard affected)" : "Risk Score: LOW (Verified non-breaking migration)", time: "0.3s" },
+        { name: "Backend Generator Agent", status: "completed", detail: "Wrote FastAPI models, routers & Alembic to disk.", time: "1.1s" },
+        { name: "Frontend Generator Agent", status: "completed", detail: "Wrote Next.js TSX list & form page stubs to disk.", time: "0.8s" },
+      ]);
+
       setIsApproved(true);
       setIsGenerating(false);
     }, 1500);
-
   };
 
   const handlePresetClick = (presetText: string) => {
