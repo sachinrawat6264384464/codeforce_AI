@@ -22,8 +22,9 @@
 ```
 
 * **Demo Video Script**: [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md)
-* **Live Web App**: [https://contextforge-ai.dev](https://contextforge-ai.dev)
-* **Repository**: [https://github.com/botmartz/CodeForge-AI](https://github.com/botmartz/CodeForge-AI)
+* **Live Web App**: [https://codeforce-ai.vercel.app](https://codeforce-ai.vercel.app)
+* **Live API Gateway**: [https://codeforce-ai.onrender.com](https://codeforce-ai.onrender.com)
+* **Repository**: [https://github.com/sachinrawat6264384464/codeforce_AI](https://github.com/sachinrawat6264384464/codeforce_AI)
 * **License**: [Apache 2.0](LICENSE)
 
 ---
@@ -76,6 +77,7 @@
 45. [License](#45-license)
 46. [Contact](#46-contact)
 47. [Contributing](#47-contributing)
+48. [Production Deployment & Live Infrastructure](#48-production-deployment--live-infrastructure)
 
 ---
 
@@ -501,5 +503,27 @@ Project Repository: [https://github.com/botmartz/CodeForge-AI](https://github.co
 
 ## 47. Contributing
 Contributions are welcome! Please open an issue or submit a pull request.
-#   c o d e f o r c e _ A I  
- 
+
+---
+
+## 48. Production Deployment & Live Infrastructure
+
+ContextForge AI is fully deployed to production using a high-availability, zero-cost serverless architecture:
+
+### 🌐 Live Infrastructure Overview
+
+| Tier / Layer | Platform | Live URL / Endpoint | Details |
+| :--- | :--- | :--- | :--- |
+| **Frontend Application** | **Vercel** | [https://codeforce-ai.vercel.app](https://codeforce-ai.vercel.app) | Next.js 14 App Router, Monaco Editor, Tailwind CSS |
+| **Backend REST & WS Gateway** | **Render** | [https://codeforce-ai.onrender.com](https://codeforce-ai.onrender.com) | Python 3.10, FastAPI, Uvicorn, LangGraph Engine |
+| **API Health Check** | **Render** | [https://codeforce-ai.onrender.com/health](https://codeforce-ai.onrender.com/health) | Returns `{"status": "ok", "project": "ContextForge AI"}` |
+| **Relational System Database** | **Neon.tech** | `ep-proud-mud-aybw88ji-pooler...` | Serverless PostgreSQL (`neondb`), SSL Pooled |
+| **Cache & Event Broker** | **Upstash** | `relaxed-beetle-169896.upstash.io` | Serverless Redis over TLS (`rediss://`) |
+
+### 🛠️ Infrastructure & Tech Stack Highlights
+* **Zero-Docker Serverless Cloud Stack**: High-speed global edge distribution on Vercel for frontend and Render for python web service.
+* **Database Isolation**: Complete separation between system core app DB (Neon PostgreSQL) and user-connected external target databases (managed via `/data-sources`).
+* **Real-time WebSockets**: Async event streaming (`wss://codeforce-ai.onrender.com/api/v1/ws`) delivering real-time agent execution updates to Monaco Editor.
+* **100% Free Tier Hosted**: Scaled on serverless free tiers with 0 monthly operating cost.
+
+#   c o d e f o r c e _ A I
