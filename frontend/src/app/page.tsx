@@ -49,6 +49,7 @@ import {
 import { driver } from "driver.js";
 
 export default function WorkspacePage() {
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
   const [prompt, setPrompt] = useState("Build a Hospital Management System in FastAPI");
   const [isGenerating, setIsGenerating] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
@@ -318,7 +319,7 @@ uvicorn app.main:app --reload --port 8000
   useEffect(() => {
     const checkBackend = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/v1/health/");
+        const res = await fetch(`${API_BASE_URL}/health/`);
         if (res.ok) setIsBackendConnected(true);
       } catch (err) {
         setIsBackendConnected(false);
@@ -333,12 +334,12 @@ uvicorn app.main:app --reload --port 8000
   useEffect(() => {
     const fetchDatabaseMetadata = async () => {
       try {
-        const dbRes = await fetch("http://localhost:8000/api/v1/database/list");
+        const dbRes = await fetch(`${API_BASE_URL}/database/list`);
         if (!dbRes.ok) return;
         const dbs = await dbRes.json();
         if (dbs && dbs.length > 0) {
           const dbId = dbs[0].id;
-          const metaRes = await fetch(`http://localhost:8000/api/v1/database/${dbId}/metadata`);
+          const metaRes = await fetch(`${API_BASE_URL}/database/${dbId}/metadata`);
           if (metaRes.ok) {
             const meta = await metaRes.json();
             if (meta.table_names && meta.table_names.length > 0) {
@@ -371,10 +372,10 @@ uvicorn app.main:app --reload --port 8000
   const runDataHubMCPTest = async () => {
     setMcpTestLoading(true);
     try {
-      const statusRes = await fetch("http://localhost:8000/api/v1/datahub/mcp/status");
+      const statusRes = await fetch(`${API_BASE_URL}/datahub/mcp/status`);
       const statusData = await statusRes.json();
 
-      const queryRes = await fetch("http://localhost:8000/api/v1/datahub/mcp/test");
+      const queryRes = await fetch(`${API_BASE_URL}/datahub/mcp/test`);
       const queryData = await queryRes.json();
 
       setMcpTestResult({
@@ -470,7 +471,7 @@ uvicorn app.main:app --reload --port 8000
       ]);
 
       try {
-        const response = await fetch("http://localhost:8000/api/v1/generations/generate", {
+        const response = await fetch(`${API_BASE_URL}/generations/generate`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ prompt: activePrompt })
@@ -699,7 +700,7 @@ uvicorn app.main:app --reload --port 8000
     setDeployCompleted(false);
 
     try {
-      await fetch("http://localhost:8000/api/v1/generations/deploy", { method: "POST" });
+      await fetch(`${API_BASE_URL}/generations/deploy`, { method: "POST" });
     } catch (err) {
       console.log("Deploy endpoint triggered");
     }
@@ -728,7 +729,7 @@ uvicorn app.main:app --reload --port 8000
     setUserChatMessage("");
 
     try {
-      const res = await fetch("http://localhost:8000/api/v1/generations/chat", {
+      const res = await fetch(`${API_BASE_URL}/generations/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: query, active_file: activeTab })
